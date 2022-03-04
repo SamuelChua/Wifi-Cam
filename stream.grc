@@ -44,6 +44,18 @@ blocks:
     coordinate: [184, 12]
     rotation: 0
     state: enabled
+- name: trigger
+  id: variable
+  parameters:
+    comment: ''
+    value: '-1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [442, 16]
+    rotation: 0
+    state: true
 - name: tuning
   id: variable_qtgui_range
   parameters:
@@ -65,6 +77,43 @@ blocks:
     coordinate: [288, 12.0]
     rotation: 0
     state: true
+- name: analog_const_source_x_0
+  id: analog_const_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: trigger
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: short
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [155, 476]
+    rotation: 0
+    state: disabled
+- name: blocks_burst_tagger_0
+  id: blocks_burst_tagger
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    false_key: burst
+    false_value: 'False'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    true_key: burst
+    true_value: 'True'
+    type: complex
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [746, 301]
+    rotation: 0
+    state: disabled
 - name: blocks_complex_to_float_0
   id: blocks_complex_to_float
   parameters:
@@ -79,6 +128,24 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [1056, 48.0]
+    rotation: 0
+    state: disabled
+- name: blocks_file_sink_0
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    append: 'False'
+    comment: ''
+    file: record
+    type: complex
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1351, 549]
     rotation: 0
     state: disabled
 - name: blocks_float_to_complex_0
@@ -111,7 +178,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [136, 380.0]
+    coordinate: [85, 369]
     rotation: 0
     state: enabled
 - name: blocks_stream_to_tagged_stream_0
@@ -130,9 +197,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [704, 164.0]
+    coordinate: [719, 166]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_tagged_file_sink_0
   id: blocks_tagged_file_sink
   parameters:
@@ -146,9 +213,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [904, 60.0]
+    coordinate: [1050, 523]
     rotation: 0
-    state: true
+    state: disabled
 - name: epy_block_0
   id: epy_block
   parameters:
@@ -179,6 +246,46 @@ blocks:
     coordinate: [1288, 88.0]
     rotation: 0
     state: disabled
+- name: epy_block_1
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
+      from gnuradio import gr, uhd\nimport time\n\nclass blk(gr.sync_block):  # other\
+      \ base classes are basic_block, decim_block, interp_block\n    \"\"\"Embedded\
+      \ Python Block example - a simple multiply const\"\"\"\n\n    def __init__(self,\
+      \ example_param=1.0):  # only default arguments here\n        \"\"\"arguments\
+      \ to this function show up as parameters in GRC\"\"\"\n        gr.sync_block.__init__(\n\
+      \            self,\n            name='Issue Stream Cmds',   # will show up in\
+      \ GRC\n            in_sig=[np.complex64],\n            out_sig=[np.complex64]\n\
+      \        )\n        # if an attribute with the same name as a parameter is found,\n\
+      \        # a callback is registered (properties work, too).\n        self.example_param\
+      \ = example_param\n\n    def work(self, input_items, output_items):\n      \
+      \  \"\"\"example: multiply with constant\"\"\"\n        output_items[0][:] =\
+      \ input_items[0] * self.example_param\n        count = 0 \n        num_samples\
+      \ = 1000000*1\n        while (count < 5):\n            time.sleep(1.0)\n   \
+      \         uhd.usrp_source_sptr.clear_command_time(self)\n            uhd.usrp_source_sptr.get_time_now()\n\
+      \            uhd.usrp_source_sptr.set_command_time(now_time + uhd.time_spec.from_ticks(2,1.0))\
+      \ \n            uhd.usrp_source_sptr.issue_stream_cmd(num_samples)\n       \
+      \ count += 1\n        time.sleep(2) \n        return len(output_items[0])"
+    affinity: ''
+    alias: ''
+    comment: ''
+    example_param: '1.0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('Issue Stream Cmds', 'blk', [('example_param', '1.0')], [('0', 'complex',
+      1)], [('0', 'complex', 1)], 'Embedded Python Block example - a simple multiply
+      const', ['example_param'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [754, 464]
+    rotation: 0
+    state: enabled
 - name: qtgui_sink_x_0
   id: qtgui_sink_x
   parameters:
@@ -205,7 +312,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1352, 412.0]
+    coordinate: [1348, 412]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0
@@ -281,7 +388,7 @@ blocks:
     tr_level: '0.0'
     tr_mode: qtgui.TRIG_MODE_TAG
     tr_slope: qtgui.TRIG_SLOPE_POS
-    tr_tag: '"packet_len"'
+    tr_tag: '"burst"'
     type: complex
     update_time: '0.10'
     width1: '1'
@@ -302,7 +409,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1392, 316.0]
+    coordinate: [1375, 307]
     rotation: 0
     state: enabled
 - name: uhd_usrp_sink_0
@@ -579,9 +686,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1096, 124.0]
+    coordinate: [1100, 138]
     rotation: 0
-    state: true
+    state: disabled
 - name: uhd_usrp_source_0
   id: uhd_usrp_source
   parameters:
@@ -951,11 +1058,15 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [432, 140.0]
+    coordinate: [413, 195]
     rotation: 0
     state: true
 
 connections:
+- [analog_const_source_x_0, '0', blocks_burst_tagger_0, '1']
+- [blocks_burst_tagger_0, '0', blocks_tagged_file_sink_0, '0']
+- [blocks_burst_tagger_0, '0', qtgui_sink_x_0, '0']
+- [blocks_burst_tagger_0, '0', qtgui_time_sink_x_0, '0']
 - [blocks_complex_to_float_0, '0', epy_block_0, '0']
 - [blocks_float_to_complex_0, '0', qtgui_time_sink_x_0, '0']
 - [blocks_message_strobe_0, strobe, qtgui_sink_x_0, freq]
@@ -966,7 +1077,12 @@ connections:
 - [blocks_stream_to_tagged_stream_0, '0', qtgui_time_sink_x_0, '0']
 - [blocks_stream_to_tagged_stream_0, '0', uhd_usrp_sink_0, '0']
 - [epy_block_0, '0', blocks_float_to_complex_0, '0']
+- [epy_block_1, '0', blocks_file_sink_0, '0']
+- [epy_block_1, '0', qtgui_sink_x_0, '0']
+- [epy_block_1, '0', qtgui_time_sink_x_0, '0']
+- [uhd_usrp_source_0, '0', blocks_burst_tagger_0, '0']
 - [uhd_usrp_source_0, '0', blocks_stream_to_tagged_stream_0, '0']
+- [uhd_usrp_source_0, '0', epy_block_1, '0']
 
 metadata:
   file_format: 1
