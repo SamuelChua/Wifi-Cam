@@ -6,7 +6,7 @@
 #
 # GNU Radio Python Flow Graph
 # Title: Not titled yet
-# GNU Radio version: 3.8.2.0
+# GNU Radio version: v3.8.2.0-57-gd71cd177
 
 from distutils.version import StrictVersion
 
@@ -35,7 +35,7 @@ from gnuradio import eng_notation
 from gnuradio import uhd
 import time
 from gnuradio.qtgui import Range, RangeWidget
-import epy_block_0
+import epy_block_1
 
 from gnuradio import qtgui
 
@@ -76,6 +76,7 @@ class stream(gr.top_block, Qt.QWidget):
         # Variables
         ##################################################
         self.tuning = tuning = 98.2e6
+        self.trigger = trigger = -1
         self.samp_rate = samp_rate = 1e6
 
         ##################################################
@@ -111,7 +112,7 @@ class stream(gr.top_block, Qt.QWidget):
         self.qtgui_time_sink_x_0.set_y_label('Amplitude', "")
 
         self.qtgui_time_sink_x_0.enable_tags(True)
-        self.qtgui_time_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_TAG, qtgui.TRIG_SLOPE_POS, 0.0, 0, 0, "packet_len")
+        self.qtgui_time_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_TAG, qtgui.TRIG_SLOPE_POS, 0.0, 0, 0, "burst")
         self.qtgui_time_sink_x_0.enable_autoscale(True)
         self.qtgui_time_sink_x_0.enable_grid(False)
         self.qtgui_time_sink_x_0.enable_axis_labels(True)
@@ -166,11 +167,8 @@ class stream(gr.top_block, Qt.QWidget):
         self.qtgui_sink_x_0.enable_rf_freq(True)
 
         self.top_grid_layout.addWidget(self._qtgui_sink_x_0_win)
-        self.epy_block_0 = epy_block_0.blk()
-        self.blocks_stream_to_tagged_stream_0 = blocks.stream_to_tagged_stream(gr.sizeof_gr_complex, 1, int(samp_rate), "packet_len")
+        self.epy_block_1 = epy_block_1.blk(example_param=1.0)
         self.blocks_message_strobe_0 = blocks.message_strobe(pmt.cons(pmt.intern("freq"),pmt.from_double(93e6)), 20000)
-        self.blocks_float_to_complex_0 = blocks.float_to_complex(1)
-        self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
 
 
 
@@ -179,12 +177,9 @@ class stream(gr.top_block, Qt.QWidget):
         ##################################################
         self.msg_connect((self.blocks_message_strobe_0, 'strobe'), (self.qtgui_sink_x_0, 'freq'))
         self.msg_connect((self.blocks_message_strobe_0, 'strobe'), (self.uhd_usrp_source_0, 'command'))
-        self.connect((self.blocks_complex_to_float_0, 0), (self.epy_block_0, 0))
-        self.connect((self.blocks_float_to_complex_0, 0), (self.qtgui_sink_x_0, 0))
-        self.connect((self.blocks_float_to_complex_0, 0), (self.qtgui_time_sink_x_0, 0))
-        self.connect((self.blocks_stream_to_tagged_stream_0, 0), (self.blocks_complex_to_float_0, 0))
-        self.connect((self.epy_block_0, 0), (self.blocks_float_to_complex_0, 0))
-        self.connect((self.uhd_usrp_source_0, 0), (self.blocks_stream_to_tagged_stream_0, 0))
+        self.connect((self.epy_block_1, 0), (self.qtgui_sink_x_0, 0))
+        self.connect((self.epy_block_1, 0), (self.qtgui_time_sink_x_0, 0))
+        self.connect((self.uhd_usrp_source_0, 0), (self.epy_block_1, 0))
 
 
     def closeEvent(self, event):
@@ -200,13 +195,17 @@ class stream(gr.top_block, Qt.QWidget):
         self.qtgui_sink_x_0.set_frequency_range(self.tuning, self.samp_rate)
         self.uhd_usrp_source_0.set_center_freq(uhd.tune_request(self.tuning, 10e6), 0)
 
+    def get_trigger(self):
+        return self.trigger
+
+    def set_trigger(self, trigger):
+        self.trigger = trigger
+
     def get_samp_rate(self):
         return self.samp_rate
 
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
-        self.blocks_stream_to_tagged_stream_0.set_packet_len(int(self.samp_rate))
-        self.blocks_stream_to_tagged_stream_0.set_packet_len_pmt(int(self.samp_rate))
         self.qtgui_sink_x_0.set_frequency_range(self.tuning, self.samp_rate)
         self.qtgui_time_sink_x_0.set_samp_rate(self.samp_rate)
         self.uhd_usrp_source_0.set_samp_rate(self.samp_rate)
