@@ -6,7 +6,7 @@
 #
 # GNU Radio Python Flow Graph
 # Title: FM_Record
-# GNU Radio version: 3.8.2.0
+# GNU Radio version: v3.8.2.0-57-gd71cd177
 
 from distutils.version import StrictVersion
 
@@ -37,7 +37,6 @@ from gnuradio import eng_notation
 from gnuradio import uhd
 import time
 from gnuradio.qtgui import Range, RangeWidget
-import epy_block_0
 
 from gnuradio import qtgui
 
@@ -77,7 +76,7 @@ class Test(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.tx_onoff = tx_onoff = True
+        self.tx_onoff = tx_onoff = False
         self.tuning = tuning = 98.7e6
         self.samp_rate = samp_rate = 1e6
         self.rf_gain = rf_gain = 50
@@ -148,8 +147,7 @@ class Test(gr.top_block, Qt.QWidget):
                 10e3,
                 firdes.WIN_HAMMING,
                 6.76))
-        self.epy_block_0 = epy_block_0.txrx()
-        self.blocks_wavfile_sink_0 = blocks.wavfile_sink('fm_record', 1, 96000, 8)
+        self.blocks_wavfile_sink_0 = blocks.wavfile_sink('C:\\Program Files\\GNURadio-3.8\\bin\\fm_record', 1, 96000, 8)
         self.blocks_mute_xx_0 = blocks.mute_cc(bool(tx_onoff))
         self.audio_sink_0 = audio.sink(96000, '', True)
         self.analog_wfm_rcv_0 = analog.wfm_rcv(
@@ -162,7 +160,6 @@ class Test(gr.top_block, Qt.QWidget):
         ##################################################
         # Connections
         ##################################################
-        self.msg_connect((self.epy_block_0, 'rx_cmd'), (self.uhd_usrp_source_0, 'command'))
         self.connect((self.analog_wfm_rcv_0, 0), (self.rational_resampler_xxx_0, 0))
         self.connect((self.blocks_mute_xx_0, 0), (self.qtgui_sink_x_0, 0))
         self.connect((self.low_pass_filter_0, 0), (self.analog_wfm_rcv_0, 0))
