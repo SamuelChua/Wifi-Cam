@@ -34,7 +34,7 @@ from gnuradio.eng_arg import eng_float, intx
 from gnuradio import uhd
 import time
 from gnuradio.qtgui import Range, RangeWidget
-
+from datetime import datetime
 from gnuradio import qtgui
 
 class extract(gr.top_block, Qt.QWidget):
@@ -144,7 +144,7 @@ class extract(gr.top_block, Qt.QWidget):
         self.qtgui_sink_x_0.enable_rf_freq(True)
 
         self.top_grid_layout.addWidget(self._qtgui_sink_x_0_win)
-        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_gr_complex*1, 'C:\\Users\\intern\\Documents\\GitHub\\Wifi-Cam\\signal_data\\filename', False)
+        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_gr_complex*1, 'C:\\Users\\intern\\Documents\\GitHub\\Wifi-Cam\\signal_data\\filename' + datetime.now().strftime("%Y.%m.%d.%H.%M.%S"), False)
         self.blocks_file_sink_0.set_unbuffered(False)
         self.recording_state = False
 
@@ -156,19 +156,20 @@ class extract(gr.top_block, Qt.QWidget):
         self.connect((self.uhd_usrp_source_0, 0), (self.qtgui_sink_x_0, 0))
 
 
-    def toggle_recording(self):
-        timestamp = time.localtime() #Use localtime for generating filenames
-        filename = "%04d_%02d_%02d_%02d:%02d:%02d.dat" % (timestamp.tm_year, timestamp.tm_mon, timestamp.tm_mday, timestamp.tm_hour, timestamp.tm_min, timestamp.tm_sec)
-        if (self.recording_state == True):
-            self.recording_state = False
+
+    def toggle_recording(self): #Using pushbutton GUI
+        #timestamp = time.localtime() #Use localtime for generating filenames
+        #filename = "%04d_%02d_%02d_%02d:%02d:%02d.dat" % (timestamp.tm_year, timestamp.tm_mon, timestamp.tm_mday, timestamp.tm_hour, timestamp.tm_min, timestamp.tm_sec)
+        if (self.record== 1):
+            self.record = 0
             self._record_choices = 0
             print ("Recording Data: Off")
             self.blocks_file_sink_0.close()
         else:
-            self.recording_state = True
+            self.record = 1
             print ("Recording Data to" + filename)
             self._record_choices = 1
-            self.blocks_file_sink_0.open(self.prefix+filename)    
+            self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_gr_complex*1, 'C:\\Users\\intern\\Documents\\GitHub\\Wifi-Cam\\signal_data\\filename' + datetime.now().strftime("%Y.%m.%d.%H.%M.%S"), False)  
 
     def closeEvent(self, event):
         self.settings = Qt.QSettings("GNU Radio", "extract")
