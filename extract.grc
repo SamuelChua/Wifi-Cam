@@ -18,7 +18,7 @@ options:
     realtime_scheduling: ''
     run: 'True'
     run_command: '{python} -u {filename}'
-    run_options: prompt
+    run_options: run
     sizing_mode: fixed
     thread_safe_setters: ''
     title: Extract
@@ -27,23 +27,106 @@ options:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [8, 8]
+    coordinate: [6, 8]
     rotation: 0
     state: enabled
 
 blocks:
-- name: samp_rate
-  id: variable
+- name: Switch
+  id: variable_qtgui_chooser
   parameters:
     comment: ''
-    value: '32000'
+    gui_hint: ''
+    label: ''
+    label0: 'Off'
+    label1: 'On'
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '2'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[0, 1, 2]'
+    orient: Qt.QVBoxLayout
+    type: int
+    value: '0'
+    widget: combo_box
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [184, 12]
+    coordinate: [919, 9]
+    rotation: 0
+    state: true
+- name: button
+  id: variable_qtgui_push_button
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: 'On/Off '
+    pressed: '1'
+    released: '0'
+    type: int
+    value: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [290, 4]
+    rotation: 0
+    state: disabled
+- name: duration
+  id: variable
+  parameters:
+    comment: ''
+    value: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [812, 66]
+    rotation: 0
+    state: true
+- name: prefix
+  id: variable
+  parameters:
+    comment: ''
+    value: '''C:\\Users\\intern\\Documents\\GitHub\\Wifi-Cam\\signal_data\\filename'''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [603, 11]
+    rotation: 0
+    state: true
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: 1e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [190, 14]
     rotation: 0
     state: enabled
+- name: time
+  id: variable
+  parameters:
+    comment: ''
+    value: prefix + datetime.now().strftime("%H.%M.%S")
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [600, 82]
+    rotation: 0
+    state: true
 - name: tuning
   id: variable_qtgui_range
   parameters:
@@ -54,23 +137,192 @@ blocks:
     orient: Qt.Horizontal
     rangeType: float
     start: 70e6
-    step: 200e4
-    stop: 3000e6
-    value: 98.2e6
+    step: 2e6
+    stop: 3e9
+    value: 2.422e9
     widget: counter_slider
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [288, 12.0]
+    coordinate: [448, 6]
+    rotation: 0
+    state: enabled
+- name: analog_pwr_squelch_xx_0
+  id: analog_pwr_squelch_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha: 1e-4
+    comment: ''
+    gate: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    ramp: '0'
+    threshold: '-140'
+    type: complex
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [887, 292]
+    rotation: 0
+    state: enabled
+- name: blocks_file_sink_0
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    append: 'False'
+    comment: ''
+    file: time
+    type: complex
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1115, 231]
     rotation: 0
     state: true
+- name: blocks_message_debug_0
+  id: blocks_message_debug
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [807, 405]
+    rotation: 0
+    state: true
+- name: blocks_multiply_const_vxx_0
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: Switch
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [459, 391]
+    rotation: 0
+    state: disabled
+- name: blocks_mute_xx_0
+  id: blocks_mute_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    mute: 'True'
+    type: complex
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [762, 205]
+    rotation: 0
+    state: enabled
+- name: epy_block_0
+  id: epy_block
+  parameters:
+    Num_Samples_To_Count: int(samp_rate*duration)
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
+      from gnuradio import gr\nimport pmt\n\n\nclass blk(gr.sync_block):  # other\
+      \ base classes are basic_block, decim_block, interp_block\n    \"\"\"Embedded\
+      \ Python Block example - a simple multiply const\"\"\"\n\n    def __init__(self,\
+      \ Num_Samples_To_Count = 128):  # only default arguments here\n        \"\"\"\
+      arguments to this function show up as parameters in GRC\"\"\"\n        gr.sync_block.__init__(\n\
+      \            self,\n            name='True/False',   # will show up in GRC\n\
+      \            in_sig=[np.complex64],\n            out_sig=[np.complex64]\n  \
+      \      )\n        # if an attribute with the same name as a parameter is found,\n\
+      \        # a callback is registered (properties work, too).\n        self.Num_Samples_To_Count\
+      \ = Num_Samples_To_Count\n        self.portName = \"MessageOutput\"\n      \
+      \  self.message_port_register_out(pmt.intern(self.portName))\n        self.state\
+      \ = True\n        self.counter = 0\n\n    def work(self, input_items, output_items):\n\
+      \        \"\"\"example: multiply with constant\"\"\"\n        output_items[0][:]\
+      \ = input_items[0] \n        self.counter = self.counter + len(output_items[0])\n\
+      \n        if (self.counter > self.Num_Samples_To_Count):\n            PMT_msg\
+      \ = pmt.from_bool(self.state)\n            self.message_port_pub(pmt.intern(self.portName),\
+      \ PMT_msg)\n            self.state = not(self.state)\n            self.counter\
+      \ = 0\n\n        return len(output_items[0])\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('True/False', 'blk', [('Num_Samples_To_Count', '128')], [('0', 'complex',
+      1)], [('0', 'complex', 1), ('MessageOutput', 'message', 1)], 'Embedded Python
+      Block example - a simple multiply const', ['Num_Samples_To_Count'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [332, 214]
+    rotation: 0
+    state: enabled
+- name: import_0
+  id: import
+  parameters:
+    alias: ''
+    comment: ''
+    imports: from datetime import datetime
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [797, 11]
+    rotation: 0
+    state: true
+- name: qtgui_sink_x_0
+  id: qtgui_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    bw: samp_rate
+    comment: ''
+    fc: tuning
+    fftsize: '1024'
+    gui_hint: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: '""'
+    plotconst: 'True'
+    plotfreq: 'True'
+    plottime: 'True'
+    plotwaterfall: 'True'
+    rate: '10'
+    showports: 'False'
+    showrf: 'True'
+    type: complex
+    wintype: firdes.WIN_BLACKMAN_hARRIS
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1134, 374]
+    rotation: 0
+    state: enabled
 - name: uhd_usrp_source_0
   id: uhd_usrp_source
   parameters:
     affinity: ''
     alias: ''
-    ant0: RX2
+    ant0: TX/RX
     ant1: RX2
     ant10: RX2
     ant11: RX2
@@ -102,7 +354,7 @@ blocks:
     ant7: RX2
     ant8: RX2
     ant9: RX2
-    bw0: '0'
+    bw0: samp_rate
     bw1: '0'
     bw10: '0'
     bw11: '0'
@@ -134,7 +386,7 @@ blocks:
     bw7: '0'
     bw8: '0'
     bw9: '0'
-    center_freq0: '0'
+    center_freq0: tuning
     center_freq1: '0'
     center_freq10: '0'
     center_freq11: '0'
@@ -210,7 +462,7 @@ blocks:
     dc_offs_enb9: '""'
     dev_addr: '""'
     dev_args: '""'
-    gain0: '0'
+    gain0: '50'
     gain1: '0'
     gain10: '0'
     gain11: '0'
@@ -434,31 +686,20 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [592, 204.0]
-    rotation: 0
-    state: true
-- name: zeromq_push_sink_0
-  id: zeromq_push_sink
-  parameters:
-    address: ''
-    affinity: ''
-    alias: ''
-    comment: ''
-    hwm: '-1'
-    pass_tags: 'False'
-    timeout: '100'
-    type: complex
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [816, 236.0]
+    coordinate: [42, 248]
     rotation: 0
     state: true
 
 connections:
-- [uhd_usrp_source_0, '0', zeromq_push_sink_0, '0']
+- [analog_pwr_squelch_xx_0, '0', blocks_file_sink_0, '0']
+- [analog_pwr_squelch_xx_0, '0', qtgui_sink_x_0, '0']
+- [blocks_multiply_const_vxx_0, '0', analog_pwr_squelch_xx_0, '0']
+- [blocks_mute_xx_0, '0', analog_pwr_squelch_xx_0, '0']
+- [epy_block_0, '0', blocks_mute_xx_0, '0']
+- [epy_block_0, MessageOutput, blocks_message_debug_0, print]
+- [epy_block_0, MessageOutput, blocks_mute_xx_0, set_mute]
+- [uhd_usrp_source_0, '0', blocks_multiply_const_vxx_0, '0']
+- [uhd_usrp_source_0, '0', epy_block_0, '0']
 
 metadata:
   file_format: 1
