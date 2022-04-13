@@ -34,7 +34,7 @@ abs_power = np.abs(d)
 #new_trash = np.delete(trash, ii)
 trash = np.where(abs_power == 0)[0] #indices of all zeros 
 ii = np.argwhere(abs_power != 0) #indices of all non_zeros
-gap = np.where(np.diff(ii.flatten()) > 10000) #last index of n readings
+gap = np.where(np.diff(ii.flatten()) > 10000) #last index of n readings recorded
 mean_readings.append(np.mean(abs_power[ii.flatten()[1]:ii.flatten()[gap][0]]))
 mean_readings.append(np.mean(abs_power[ii.flatten()[gap][0] + 1:ii.flatten()[-1]]))
 num_samps = abs_power.size
