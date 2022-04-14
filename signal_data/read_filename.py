@@ -10,6 +10,7 @@ import serial
 import time
 import seaborn as sns
 
+
 #e = np.fromfile(open("C:\\Users\\intern\\Documents\\Github\\Wifi-Cam\\filename"), dtype = np.complex64)
 #print (e)
 
@@ -21,49 +22,41 @@ def simpleBinRead(filename, numSamps=-1, in_dtype=np.float32, out_dtype=np.compl
     
     return data
 
-d = simpleBinRead('C:\\Users\\intern\\Documents\\Github\\Wifi-Cam\\signal_data\\filename09.50.35') #filename16.13.30 nice graph
+d = simpleBinRead('C:\\Users\\intern\\Documents\\Github\\Wifi-Cam\\signal_data\\filename16.11.16') #filename16.13.30 nice graph
 #peaks, _ = find_peaks(d, height = 0)
-counter = 0
-total = []
+
 mean_readings = []
 abs_power = np.abs(d)
 #trash = np.argwhere(np.diff(np.argwhere(abs_power == 0).flatten())) #array of index of all zeros
-#print (abs_power[5000000])
-#ii = np.argwhere(abs_power!=0)
 #ii = np.argwhere(np.diff(ii.flatten()) != 1) #array of index of zeros but within the "on" recording
-#new_trash = np.delete(trash, ii)
-trash = np.where(abs_power == 0)[0] #indices of all zeros 
+trash = np.argwhere(abs_power == 0) #indices of all zeros 
 ii = np.argwhere(abs_power != 0) #indices of all non_zeros
-gap = np.where(np.diff(ii.flatten()) > 10000) #last index of n readings recorded
-mean_readings.append(np.mean(abs_power[ii.flatten()[1]:ii.flatten()[gap][0]]))
-mean_readings.append(np.mean(abs_power[ii.flatten()[gap][0] + 1:ii.flatten()[-1]]))
-num_samps = abs_power.size
+gap = np.where(np.diff(ii.flatten()) > 10000) #last index of n-1 readings recorded
+#index = [0, -1]
+#new_gap = np.delete(gap, index)
+#print (new_gap) 
+gap1 = gap[0][:-1]
+print (gap1)
+
+mean_readings.append(np.mean(abs_power[ii.flatten()[1]:ii.flatten()[gap[0][0]]])) #first reading
+for i, elem in enumerate(gap1):  
+
+    if elem == gap1[-1]: #2nd last reading
+        mean_readings.append(np.mean(abs_power[ii.flatten()[elem+1]:ii.flatten()[gap[0][-1]]])) #2nd last reading
+        break
+    else:
+        mean_readings.append(np.mean(abs_power[ii.flatten()[elem+1]:ii.flatten()[gap1[i+1]]]))           
+
+mean_readings.append(np.mean(abs_power[ii.flatten()[gap[0][-1] + 1]:ii.flatten()[-1]])) #last reading
 
 
-
-# for i in range(num_samps):
-#     print (str(i) + " out of " + str(num_samps) + " left")
-#     if abs_power[i] > 0.03 or abs_power[i] == 0 and i not in new_trash: 
-#         total.append(abs_power[i]) 
-#         print ("Current Total Power: " + str(total))
-#         if abs_power[i] == 0 and i in new_trash:
-#             counter += 1
-#             power = np.mean(total)
-#             print ("Mean Power " + str(counter) + ": " + str(power)) 
-#             mean_readings.append(power)
-#             total.clear()     
-#new_mean_readings = [x for x in mean_readings if str(x) != 'nan']  
 print ("Number of Readings:" + str(len(mean_readings)))  
 print (mean_readings)
-#mean_readings.extend([0]*474)
-#print ("Number of Readings:" + str(len(mean_readings))) 
 arr = np.array(mean_readings, dtype = np.float32) 
-# print (arr.shape)
-# print (arr)
 arr = arr.reshape((1,len(mean_readings))).astype('float32')
 print (arr)
 print (arr.shape)
-ax = sns.heatmap(arr, vmin=0, vmax=0.001, annot = True)
+ax = sns.heatmap(arr, annot = True)
 plt.show()
 
 
