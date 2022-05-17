@@ -23,3 +23,7 @@ def arduino():
 
             #if data:
                 #print (data)
+
+    #while 1:
+        #command = input("Servo Position: ")
+        #arduino.write(command.encode())
