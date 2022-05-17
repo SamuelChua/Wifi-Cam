@@ -13,19 +13,18 @@ walls!). Overall, I controlled and manipulated both the radio and camera with DS
 - Hardware/Tools used
 - Software
 - Python Programs
+- Running the program
 
 
 ## Hardware/Software Tools Used
 ### USRP Software Defined Radio 
-The USRP B205 Mini-i is a SDR designed by Ettus Research which has a Frequency range: 70 MHz – 6 GHz and up to 56 MHz of instantaneous Bandwidth
-
-
+The USRP B205 Mini-i is a SDR designed by Ettus Research which has a Frequency range: 70 MHz – 6 GHz and up to 56 MHz of instantaneous Bandwidth. Using SDR technologies can allow me to easily configure to the requirements I'm looking to detect Wifi signals
 <img src="https://user-images.githubusercontent.com/9492646/168749479-fe65405c-384f-4492-9fda-59c76cafda7e.jpg" width="400">
 
-Yagi Antenna
-
+### Yagi Antenna
+The 2.4GHz Yagi Antenna is a directional antenna which has a good front-to-back ratio of 16dB to minimise unwanted signals. 
 <img src ="https://user-images.githubusercontent.com/9492646/168747625-059d9247-391d-4e11-9860-cb122a4c1f6c.png" width="400">
-
+Here are some links to the datasheet of the antenna 
 https://www.farnell.com/datasheets/1580319.pdf
 https://shopee.sg/-2-4GHz-13DBI-15DBI-Yagi-WLAN-WiFi-Wireless-Antenna-for-Router-i.182364102.16345522237
 
