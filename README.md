@@ -13,15 +13,24 @@ walls!). Overall, I controlled and manipulated both the radio and camera with DS
 - 
 
 ## Hardware/Tools Used
+### USRP Software Defined Radio 
 The USRP B205 Mini-i is a SDR designed by Ettus Research which has a Frequency range: 70 MHz – 6 GHz and up to 56 MHz of instantaneous Bandwidth
+![image](https://user-images.githubusercontent.com/9492646/168742839-66fca055-4dc4-4ef0-8d0a-8c8166610e73.png)
+Yagi Antenna
+https://www.farnell.com/datasheets/1580319.pdf
+
+Arduino Servo Motor
+
+https://sg.element14.com/multicomp-pro/mp-708-0001/servo-motor-180deg/dp/3359813?CMP=i-55c5-00001621
 
 ## Software 
-GNURadio 
-GNURadio was installed via https://wiki.gnuradio.org/index.php/InstallingGR#For_GNU_Radio_3.10,_3.9,_and_Main_Branch on Windows 
+### GNURadio 
+GNU Radio is a free & open-source software development toolkit that provides signal processing blocks to implement software radios. I ran it mainly with Python 
 
-GNU Radio is a free & open-source software development toolkit that provides signal processing blocks to implement software radios. It can be used with readily-available low-cost external RF hardware to create software-defined radios, or without hardware in a simulation-like environment. It is widely used in research, industry, academia, government, and hobbyist environments to support both wireless communications research and real-world radio systems.
+GNURadio was installed via http://www.gcndevelopment.com/gnuradio/downloads.htm on Windows, specifically GNURadio V3.8.2.0-win64 for my project. 
 
-Mainly ran using Python 
+
+
 
  ###### Test.py - Gnuradio Companion generated program file to see and listen to different freqs #######
  ###### epy_block_0.py - Python block to link to USRP for timed commands (using time.sleep()) #######
