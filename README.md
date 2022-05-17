@@ -26,11 +26,11 @@ The 2.4GHz Yagi Antenna is a directional antenna which has a good front-to-back 
 <img src ="https://user-images.githubusercontent.com/9492646/168747625-059d9247-391d-4e11-9860-cb122a4c1f6c.png" width="400">
 Here are some links to the datasheet of the antenna 
 https://www.farnell.com/datasheets/1580319.pdf
-https://shopee.sg/-2-4GHz-13DBI-15DBI-Yagi-WLAN-WiFi-Wireless-Antenna-for-Router-i.182364102.16345522237
 
-Servo Motor
-
+### Servo Motor
+Despite its small size, the servo motor has a peak stall torque of 1.5kg.cm which is sufficient to rotate the antenna (300g) given certain support of the antenna. Similarly, here are some links to the datasheet of the servo motor
 https://sg.element14.com/multicomp-pro/mp-708-0001/servo-motor-180deg/dp/3359813?CMP=i-55c5-00001621
+https://www.farnell.com/datasheets/2914226.pdf
 
 
 ### GNURadio 
