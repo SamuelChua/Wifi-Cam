@@ -43,9 +43,34 @@ Arduino is also an open-source tool for electronics projects which consists of t
 
 ### Reimage Package
 
-Credits to my mentor, Gabriel https://github.com/icyveins7/reimage
+Credits to my mentor, Gabriel. I can save the trouble of repeatedly running np.abs(d) to generate a graph 
+https://github.com/icyveins7/reimage
 
-## Python Programs 
+### Python Programs 
+Webcam
+- Controlling the USB Webcam
+
+Arduino
+- Will send Arduino list of angles 
+
+Master
+- Master Program to control the GNURadio, Arduino and Webcam 
+
+Extract
+- GNURadio generated script with additional new_main function to access GNURadio 'locally'
+
+Pano
+- Generate panorama from the photos taken by webcam
+
+
+Read_filename
+- Data processing of bin file generated from GNURadio to give final heatmap of relative power from Wifi signals + overlaying picture of surrounding
+
+
+### Running the program
+
+
+
 
 GNURadio Flowgraph
 
@@ -59,40 +84,34 @@ By making use GT GUI Chooser with my Multiply Const block, I can change the valu
 
 
 2. Timed Intervals 
+Created a custom embedded python block to record for n seconds then mute the USRP signal for n seconds. The cycle will then continue
 
 ![Screenshot 2022-05-17 165326](https://user-images.githubusercontent.com/9492646/168771553-8c1bdca7-b0c1-4f9e-bae3-426936dc4b34.png)
 
 
 
-Other ways that I attempted: 
-Using a selector block and n file sinks as output (Able to get 6 separate readings in 6 bin files but limitation was the version I was using couldn't update to latest selector block with input and output index to swap between different output indices. Additionally, having n sinks to give n separate readings wouldn't be sustainable to keep adding file sink blocks in GNURadio)
+Ideas I experimented with along the way: 
+
+Generating the output bin file:
+- Using a selector block and n file sinks as output (Able to get 6 separate readings in 6 bin files but limitation was the version I was using couldn't update to latest selector block with input and output index to swap between different output indices. Additionally, having n sinks to give n separate readings wouldn't be sustainable to keep adding file sink blocks in GNURadio)
 
 ![Screenshot 2022-05-17 170300](https://user-images.githubusercontent.com/9492646/168773626-3483b6c3-6ccc-4434-85a8-b717e60b41ca.png)
 
 
-Using custom python blocks to swap sinks (Swap File Sink & Custom File Sinks)
-Couldn't come to fruition 
-
+- Using custom python blocks to swap sinks (Swap File Sink & Custom File Sink)
+Couldn't come to fruition, nonetheless might need more than 1 file sink as it may not be possible to reuse the same file sink after swapping to null sink
+Note that Custom File Sink is a Hier Block
 
 ![Screenshot 2022-05-17 165818](https://user-images.githubusercontent.com/9492646/168772523-772d2026-9a67-4c41-b95b-c8be478d2ec5.png)
+![Screenshot 2022-05-17 171704](https://user-images.githubusercontent.com/9492646/168776395-debf46ec-f20b-4bac-83bc-ea0077672ce4.png)
 
 
 
 
 
 
-Webcam
-Arduino
-Master
 
 
-Extract
-
-Read_filename
-Pano
-
-
-Run from master
 
  ###### Test.py - Gnuradio Companion generated program file to see and listen to different freqs #######
  ###### epy_block_0.py - Python block to link to USRP for timed commands (using time.sleep()) #######
