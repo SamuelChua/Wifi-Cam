@@ -59,26 +59,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [919, 9]
+    coordinate: [649, 13]
     rotation: 0
     state: true
-- name: button
-  id: variable_qtgui_push_button
-  parameters:
-    comment: ''
-    gui_hint: ''
-    label: 'On/Off '
-    pressed: '1'
-    released: '0'
-    type: int
-    value: '0'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [290, 4]
-    rotation: 0
-    state: disabled
 - name: duration
   id: variable
   parameters:
@@ -88,7 +71,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [812, 77]
+    coordinate: [134, 110]
     rotation: 0
     state: true
 - name: prefix
@@ -100,19 +83,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [603, 11]
-    rotation: 0
-    state: true
-- name: prefix_0
-  id: variable
-  parameters:
-    comment: ''
-    value: '''C:\\Users\\intern\\Documents\\GitHub\\Wifi-Cam\\signal_data\\f'''
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [1052, 77]
+    coordinate: [451, 13]
     rotation: 0
     state: true
 - name: samp_rate
@@ -136,19 +107,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [600, 82]
-    rotation: 0
-    state: true
-- name: time_0
-  id: variable
-  parameters:
-    comment: ''
-    value: prefix_0 + datetime.now().strftime("%H.%M.%S")
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [1052, 10]
+    coordinate: [448, 81]
     rotation: 0
     state: true
 - name: tuning
@@ -169,7 +128,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [448, 6]
+    coordinate: [296, 11]
     rotation: 0
     state: enabled
 - name: Custom_File_Sink_0
@@ -182,7 +141,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1341, 104]
+    coordinate: [1246, 72]
     rotation: 0
     state: disabled
 - name: analog_pwr_squelch_xx_0
@@ -202,7 +161,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [893, 286]
+    coordinate: [836, 350]
     rotation: 0
     state: enabled
 - name: blocks_file_sink_0
@@ -220,27 +179,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1382, 221]
+    coordinate: [1265, 353]
     rotation: 0
     state: enabled
-- name: blocks_file_sink_0_0
-  id: blocks_file_sink
-  parameters:
-    affinity: ''
-    alias: ''
-    append: 'False'
-    comment: ''
-    file: time_0
-    type: complex
-    unbuffered: 'False'
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [1382, 320]
-    rotation: 0
-    state: disabled
 - name: blocks_message_debug_0
   id: blocks_message_debug
   parameters:
@@ -251,7 +192,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [768, 488]
+    coordinate: [605, 360]
     rotation: 0
     state: disabled
 - name: blocks_multiply_const_vxx_0
@@ -269,7 +210,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [460, 393]
+    coordinate: [450, 621]
     rotation: 0
     state: enabled
 - name: blocks_mute_xx_0
@@ -286,7 +227,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [784, 191]
+    coordinate: [753, 181]
     rotation: 0
     state: disabled
 - name: blocks_null_sink_0
@@ -303,7 +244,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1395, 162]
+    coordinate: [1369, 122]
     rotation: 0
     state: disabled
 - name: blocks_selector_0
@@ -326,7 +267,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1123, 216]
+    coordinate: [1191, 177]
     rotation: 0
     state: disabled
 - name: epy_block_0
@@ -370,7 +311,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [357, 198]
+    coordinate: [326, 182]
     rotation: 0
     state: disabled
 - name: epy_block_1
@@ -411,7 +352,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1136, 162]
+    coordinate: [1006, 59]
     rotation: 0
     state: disabled
 - name: import_0
@@ -424,7 +365,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [797, 11]
+    coordinate: [14, 109]
     rotation: 0
     state: true
 - name: qtgui_sink_x_0
@@ -453,7 +394,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1134, 374]
+    coordinate: [1247, 493]
     rotation: 0
     state: enabled
 - name: uhd_usrp_source_0
@@ -825,7 +766,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [107, 247]
+    coordinate: [65, 400]
     rotation: 0
     state: true
 

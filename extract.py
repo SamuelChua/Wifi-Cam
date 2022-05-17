@@ -8,9 +8,7 @@
 # Title: Extract
 # GNU Radio version: v3.8.2.0-57-gd71cd177
 
-
-
-# GNU Radio Generated Script with edits from line 257
+# GNU Radio Generated Script with edits from line 246
 
 from distutils.version import StrictVersion
 
@@ -80,10 +78,8 @@ class extract(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.prefix_0 = prefix_0 = 'C:\\Users\\intern\\Documents\\GitHub\\Wifi-Cam\\signal_data\\f'
         self.prefix = prefix = 'C:\\Users\\intern\\Documents\\GitHub\\Wifi-Cam\\signal_data\\filename'
         self.tuning = tuning = 2.422e9
-        self.time_0 = time_0 = prefix_0 + datetime.now().strftime("%H.%M.%S")
         self.time = time = prefix + datetime.now().strftime("%H.%M.%S")
         self.samp_rate = samp_rate = 4e5
         self.duration = duration = 5
@@ -164,13 +160,6 @@ class extract(gr.top_block, Qt.QWidget):
         self.settings.setValue("geometry", self.saveGeometry())
         event.accept()
 
-    def get_prefix_0(self):
-        return self.prefix_0
-
-    def set_prefix_0(self, prefix_0):
-        self.prefix_0 = prefix_0
-        self.set_time_0(self.prefix_0 + datetime.now().strftime("%H.%M.%S"))
-
     def get_prefix(self):
         return self.prefix
 
@@ -185,12 +174,6 @@ class extract(gr.top_block, Qt.QWidget):
         self.tuning = tuning
         self.qtgui_sink_x_0.set_frequency_range(self.tuning, self.samp_rate)
         self.uhd_usrp_source_0.set_center_freq(self.tuning, 0)
-
-    def get_time_0(self):
-        return self.time_0
-
-    def set_time_0(self, time_0):
-        self.time_0 = time_0
 
     def get_time(self):
         return self.time
@@ -255,6 +238,9 @@ def main(top_block_cls=extract, options=None):
 
     qapp.aboutToQuit.connect(quitting)
     qapp.exec_()
+
+if __name__ == '__main__':
+    main()
 
 #Added main_new to set up 'local' GNURadio program to access the switch variable to turn on/off USRP 
 def main_new(tb, qapp, options=None):
