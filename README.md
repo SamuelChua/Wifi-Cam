@@ -12,12 +12,20 @@ walls!). Overall, I controlled and manipulated both the radio and camera with DS
 - Software
 - 
 
+
 ## Hardware/Tools Used
 ### USRP Software Defined Radio 
 The USRP B205 Mini-i is a SDR designed by Ettus Research which has a Frequency range: 70 MHz – 6 GHz and up to 56 MHz of instantaneous Bandwidth
-![image](https://user-images.githubusercontent.com/9492646/168742839-66fca055-4dc4-4ef0-8d0a-8c8166610e73.png)
+
+
+<img src="https://user-images.githubusercontent.com/9492646/168749479-fe65405c-384f-4492-9fda-59c76cafda7e.jpg" width="400">
+
 Yagi Antenna
+
+<img src ="https://user-images.githubusercontent.com/9492646/168747625-059d9247-391d-4e11-9860-cb122a4c1f6c.png" width="400">
+
 https://www.farnell.com/datasheets/1580319.pdf
+https://shopee.sg/-2-4GHz-13DBI-15DBI-Yagi-WLAN-WiFi-Wireless-Antenna-for-Router-i.182364102.16345522237
 
 Arduino Servo Motor
 
