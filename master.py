@@ -4,13 +4,12 @@ from multiprocessing import Pool, Queue, Event
 import time
 import serial, queue
 from extract import *
-from arduino import arduino
-from webcam import webcam
 import cv2
 
 def interval():
-    interval.hori_interval = list(range(0,181,45))
-    interval.vert_interval = list(range(0,181,36))
+    interval.hori_interval = range(0,181,45)
+    interval.vert_interval = range(0,181,36)
+    return interval.vert_interval, interval.hori_interval
 
 def webcam():
     cam = cv2.VideoCapture(0)
@@ -79,10 +78,10 @@ def arduino(e):
     beginpos = "0:0&1:0"
     arduino.write(beginpos.encode())
     time.sleep(10)
-
-    for i in hori_interval:
+    interval()
+    for i in interval.hori_interval:
         i = "0:" + str(i)  
-        for j in vert_interval:
+        for j in interval.vert_interval:
             j = "&1:" + str(j)
             j = i + j
             command.append(j)
