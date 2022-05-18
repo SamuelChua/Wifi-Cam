@@ -2,8 +2,7 @@
 
 ## Description
 
-In this project, I used a software defined radio (SDR) along with a directional Yagi antenna to scan a
-cone in front of it and detect Wifi signals, overlaying it on top of a normal camera
+In this project, I used a software defined radio (SDR) along with a directional Yagi antenna to scan and detect Wifi signals, overlaying it on top of a normal camera
 image in order to give directional information of signal sources (possibly through
 walls!). Overall, I controlled and manipulated both the radio and camera with DSP and arduino control of a servo motor for the antenna. With this application, I'm able to display the spatial awareness of Wifi signals. 
 
@@ -11,8 +10,11 @@ walls!). Overall, I controlled and manipulated both the radio and camera with DS
 
 ## Table of Contents 
 - Hardware/Software Tools used
-- Programs
+- Programs/Files
 - Running the program
+- Video Demonstration
+- Ideas I experimented with along the way
+- Concluding Remarks 
 
 
 ## Hardware/Software Tools Used
@@ -23,11 +25,14 @@ The USRP B205 Mini-i is a SDR designed by Ettus Research which has a Frequency r
 ### Yagi Antenna
 The 2.4GHz Yagi Antenna is a directional antenna which has a good front-to-back ratio of 16dB to minimise unwanted signals. 
 <img src ="https://user-images.githubusercontent.com/9492646/168747625-059d9247-391d-4e11-9860-cb122a4c1f6c.png" width="400">
+
 Here are some links to the datasheet of the antenna 
+
 https://www.farnell.com/datasheets/1580319.pdf
 
 ### Servo Motor
 Despite its small size, the servo motor has a peak stall torque of 1.5kg.cm which is sufficient to rotate the antenna (300g) given certain support of the antenna. Similarly, here are some links to the datasheet of the servo motor
+
 https://sg.element14.com/multicomp-pro/mp-708-0001/servo-motor-180deg/dp/3359813?CMP=i-55c5-00001621
 https://www.farnell.com/datasheets/2914226.pdf
 
@@ -45,7 +50,7 @@ Arduino is an open-source tool for electronics projects which consists of the mi
 Credits to my mentor, Gabriel. I can save the trouble of repeatedly running np.abs(d) and the lag to generate a graph
 https://github.com/icyveins7/reimage
 
-### Programs 
+## Programs/Files
 Webcam
 - Controlling the USB Webcam
 
@@ -73,13 +78,15 @@ Sweep
 Reimage package
 - To visualise recorded RF data in IQ samples
 
-### Running the program
+3D Prints
+- STL and SCAD files for 3D printing
+
+## Running the program
 After installing GNURadio, ensure the connnections are made between the servo and Arduino and USRP is plugged into your device. Run master.py in GNURadio command line with the extract.py in the same directory and let the fun begin! 
 
 ![Screenshot 2022-05-18 095213](https://user-images.githubusercontent.com/9492646/168941075-4526fc6e-8b72-4cc3-b572-3a572cb08138.png)
 
-
-#### GNURadio Flowgraph
+### GNURadio Flowgraph
 
 There are 2 routes you can use the flowchart
 
@@ -94,12 +101,18 @@ Created a custom embedded python block to record for n seconds then mute the USR
 ![Screenshot 2022-05-17 165326](https://user-images.githubusercontent.com/9492646/168771553-8c1bdca7-b0c1-4f9e-bae3-426936dc4b34.png)
 
 
+### Arduino (Vert_Hori)
 
+The code is designed to split the string of angles arduino.py sends into its horizontal & vertical components and having map the speed to control the movement of the servo 
 
+## Video Demonstration
 
-Ideas I experimented with along the way: 
+*Insert Video of Demonstration/Link to Youtube*
 
-Generating the output bin file:
+## Ideas I experimented with along the way: 
+
+### GNURadio
+#### Generating the output bin file:
 - Using a selector block and n file sinks as output (Able to get 6 separate readings in 6 bin files but limitation was the version I was using couldn't update to latest selector block with input and output index to swap between different output indices. Additionally, having n sinks to give n separate readings wouldn't be sustainable to keep adding file sink blocks in GNURadio)
 
 ![Screenshot 2022-05-17 170300](https://user-images.githubusercontent.com/9492646/168773626-3483b6c3-6ccc-4434-85a8-b717e60b41ca.png)
@@ -112,15 +125,10 @@ Note that Custom File Sink is a Hier Block
 ![Screenshot 2022-05-17 165818](https://user-images.githubusercontent.com/9492646/168772523-772d2026-9a67-4c41-b95b-c8be478d2ec5.png)
 ![Screenshot 2022-05-17 171704](https://user-images.githubusercontent.com/9492646/168776395-debf46ec-f20b-4bac-83bc-ea0077672ce4.png)
 
+- Getting the GNURadio to record the data using stream tags (stream.grc/tagged file sink.grc). Had trouble to generate tags and getting the flowchart to recognise these tags/bursts to switch the on/off record 
 
+- Getting timed recordings using the 'head' block in GNURadio(extract_nogui.grc). It did work to an extent, as it will turn off the USRP afterwards and not knowing how it can turn on again
 
+## Concluding Remarks 
+I thoroughly enjoyed the entire process of figuring out how open source frameworks like GNURadio and Arduino work, building my own 'WiFi-seeing' camera from scratch independently. I'm most certainly looking forward to exploiting more technologies that touch both hardware and software. Feel free to reach out for any questions! 
 
-
-
-
-
-
- ###### Test.py - Gnuradio Companion generated program file to see and listen to different freqs #######
- ###### epy_block_0.py - Python block to link to USRP for timed commands (using time.sleep()) #######
- ###### stream.py - Use Message Strobe + Stream Tags + Custom Py block to read and print tags to freq hop once after 20s ######
- ###### epy_block_0_read_tag.py - Python block to read stream tags ######
