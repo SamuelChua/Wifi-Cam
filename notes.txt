@@ -1,0 +1,100 @@
+MasterScript.py
+
+
+--- multiprocess call gnuradioscript.py (default off)
+
+open gnuradioscript, webcam, arduino (current progress)		
+
+start while 1:
+	master tell arduino.py to send one command
+	arduino.py (send one command to arduino)
+	arduino move (send msg to master that it's done)
+	master send command to webcam to take pic and gnuradio to record for 5s
+	webcam take pic, multiprocess turn on gnuradio 
+	multiprocess turn off gnuradio (send msg to master that it's done)
+	master tell arduino.py to send next command
+	arduino.py (send one command to arduino)
+	arduino move 
+	....
+	arduino last angle (0:180&1:180)
+
+horizontal movement (with gear plus secure stick to wooden board)
+mount webcam onto antenna
+
+
+
+import os 
+from multiprocessing import Pool
+from threading import Thread
+processes = ('extract.py', 'webcam.py', 'pano.py', 'read_filename.py', 'Vert_Hori.ino' )
+def run_processes(process):
+	os.system('python {}'.format(process))
+pool = Pool(processes=3)
+pool.map(run_process, processes)
+
+def read_data(queue_, should_stop):
+    while not should_stop.is_set():
+        # calculate/get cX, cY, angle
+        queue_.put((cX, cY, angle))
+        # sleep 30ms
+
+def send_to_ardunio(queue_, should_stop):
+    while not should_stop.is_set():
+        data = queue_.get()
+        cX, cY, angle = data
+        # update ardunio
+
+def tell_when_to_stop(should_stop):
+    # detect when to stop, and set the Event. For example, we'll wait for 10 seconds and then ask all to stop
+    time.sleep(10)
+    should_stop.set()
+
+
+queue_ = Queue()
+should_stop = Event()
+
+thread_stop_decider = Thread(target=tell_when_to_stop, args=(should_stop,))
+thread_read = Thread(target=read_data, args=(queue_, should_stop))
+thread_ardunio = Thread(target=send_to_ardunio, args=(queue_, should_stop))
+
+thread_read.start()
+thread_ardunio.start()
+thread_stop_decider.start()
+
+try:
+    while thread_read.is_alive():
+        thread_read.join(1)
+except KeyboardInterrupt:
+        should_stop.set()
+thread_read.join()
+thread_ardunio.join()
+thread_stop_decider.join()
+
+
+
+3D Print Settings
+Infill Density 30-50% depending on application, how dense is the print 
+Position of print relative to base 
+
+MakerBot.Print/GrabCAD Print (Using UPrint SE Plus/Industry Printer in Playground)
+
+SCAD
+
+Those which have PRINT extension are under GrabCAD Print
+
+1. Customizable cylinder(Small cylinder with hole, orignally meant for the string to be wounded around the nail)
+2. Planetary_Gear_Bearing (Initial V1 Bearing)
+3. Ball BEaring (V2 Bearing)
+4. Gear V1 (Gear on stick)
+5. Servo Holder 
+6. Spur Gears_10T_18T_final(Gear on stick with 10 and 18 teeth after editing on TinkerCAD with custom Internal Diameter Size)
+7. Spur Gears_10T_10M (Original from Thingiverse)
+8. Spur Gears_18T_10M (Original from Thingiverse)
+9. Pulley_Mount (Pulley for Vertical Movement, original file)
+10. Spur Gears_10T_10M_V2 (gear on stick with 10 and 18 teeth with default ID size from 7 and 8)
+11. Pulley_Final (Scaled in x and z axis)
+
+ ###### Test.py - Gnuradio Companion generated program file to see and listen to different freqs #######
+ ###### epy_block_0.py - Python block to link to USRP for timed commands (using time.sleep()) #######
+ ###### stream.py - Use Message Strobe + Stream Tags + Custom Py block to read and print tags to freq hop once after 20s ######
+ ###### epy_block_0_read_tag.py - Python block to read stream tags ######
