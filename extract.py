@@ -8,7 +8,7 @@
 # Title: Extract
 # GNU Radio version: v3.8.2.0-57-gd71cd177
 
-# GNU Radio Generated Script with edits from line 246
+# GNU Radio Generated Script with edits from line 246   
 
 from distutils.version import StrictVersion
 
