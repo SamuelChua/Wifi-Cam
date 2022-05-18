@@ -55,7 +55,7 @@ Webcam
 - Controlling the USB Webcam
 
 Arduino
-- Will send Arduino list of angles 
+- Will send Arduino list of angles via serial communication from Python to Arduino
 
 Master
 - Master Program to control the GNURadio, Arduino and Webcam 
@@ -70,7 +70,7 @@ Read_filename
 - Data processing of bin file generated from GNURadio to give final heatmap of relative power from Wifi signals + overlaying picture of surrounding
 
 Vert_Hori
-- Arduino code to accept the list of angles from Arduino.py, and move the servos to control the vertical and horizontal movement of the antenna
+- Arduino code to accept the list of angles from Arduino.py, and move the servos to control the vertical and horizontal movement of the antenna via serial communication between Python and Arduino
 
 Sweep/Servo Motor
 - Arduino test code to ensure that the servo is working 
