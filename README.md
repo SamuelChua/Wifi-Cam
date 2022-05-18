@@ -10,9 +10,8 @@ walls!). Overall, I controlled and manipulated both the radio and camera with DS
 *Insert Picture of Full Set-Up*
 
 ## Table of Contents 
-- Hardware/Tools used
-- Software
-- Python Programs
+- Hardware/Software Tools used
+- Programs
 - Running the program
 
 
@@ -38,14 +37,15 @@ GNU Radio is a free & open-source software development toolkit that provides sig
 
 GNURadio was installed via http://www.gcndevelopment.com/gnuradio/downloads.htm on Windows, specifically GNURadio V3.8.2.0-win64 for my project. 
 
-Arduino is also an open-source tool for electronics projects which consists of the microcontroller and an IDE to run and upload code to the physical Arduino code
+### Arduino
+Arduino is an open-source tool for electronics projects which consists of the microcontroller and an IDE to run and upload code to the physical Arduino code. 
 
 ### Reimage Package
 
-Credits to my mentor, Gabriel. I can save the trouble of repeatedly running np.abs(d) to generate a graph 
+Credits to my mentor, Gabriel. I can save the trouble of repeatedly running np.abs(d) and the lag to generate a graph
 https://github.com/icyveins7/reimage
 
-### Python Programs 
+### Programs 
 Webcam
 - Controlling the USB Webcam
 
@@ -61,17 +61,25 @@ Extract
 Pano
 - Generate panorama from the photos taken by webcam
 
-
 Read_filename
 - Data processing of bin file generated from GNURadio to give final heatmap of relative power from Wifi signals + overlaying picture of surrounding
 
+Vert_Hori
+- Arduino code to accept the list of angles from Arduino.py, and move the servos to control the vertical and horizontal movement of the antenna
+
+Sweep 
+- Arduino test code to ensure that the servo is working 
+
+Reimage package
+- To visualise recorded RF data in IQ samples
 
 ### Running the program
+After installing GNURadio, ensure the connnections are made between the servo and Arduino and USRP is plugged into your device. Run master.py in GNURadio command line with the extract.py in the same directory and let the fun begin! 
+
+![Screenshot 2022-05-18 095213](https://user-images.githubusercontent.com/9492646/168941075-4526fc6e-8b72-4cc3-b572-3a572cb08138.png)
 
 
-
-
-GNURadio Flowgraph
+#### GNURadio Flowgraph
 
 There are 2 routes you can use the flowchart
 
@@ -80,12 +88,12 @@ By making use GT GUI Chooser with my Multiply Const block, I can change the valu
 
 ![Screenshot 2022-05-17 165110](https://user-images.githubusercontent.com/9492646/168771117-054ba7d7-ef64-4d49-b680-3421b9b1d986.png)
 
-
-
 2. Timed Intervals 
 Created a custom embedded python block to record for n seconds then mute the USRP signal for n seconds. The cycle will then continue
 
 ![Screenshot 2022-05-17 165326](https://user-images.githubusercontent.com/9492646/168771553-8c1bdca7-b0c1-4f9e-bae3-426936dc4b34.png)
+
+
 
 
 
