@@ -80,6 +80,8 @@ Reimage package
 
 3D Prints
 - STL and SCAD files for 3D printing
+- Infill Density 30-50% depending on application (how dense is the print)
+- Made use of MakerBot.Print/GrabCAD Print (Using UPrint SE Plus/Industry Printer in DSO Playground of which those with PRINT extension used GrabCAD Print)
 
 ## Running the program
 After installing GNURadio, ensure the connnections are made between the servo and Arduino and USRP is plugged into your device. Run master.py in GNURadio command line with the extract.py in the same directory and let the fun begin! 
