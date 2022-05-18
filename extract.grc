@@ -161,7 +161,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [836, 350]
+    coordinate: [806, 373]
     rotation: 0
     state: enabled
 - name: blocks_file_sink_0
@@ -179,7 +179,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1265, 353]
+    coordinate: [1292, 370]
     rotation: 0
     state: enabled
 - name: blocks_message_debug_0
@@ -244,7 +244,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1369, 122]
+    coordinate: [1369, 121]
     rotation: 0
     state: disabled
 - name: blocks_selector_0
@@ -352,7 +352,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1006, 59]
+    coordinate: [1005, 59]
     rotation: 0
     state: disabled
 - name: import_0
@@ -771,7 +771,6 @@ blocks:
     state: true
 
 connections:
-- [analog_pwr_squelch_xx_0, '0', Custom_File_Sink_0, '0']
 - [analog_pwr_squelch_xx_0, '0', blocks_file_sink_0, '0']
 - [analog_pwr_squelch_xx_0, '0', blocks_selector_0, '0']
 - [analog_pwr_squelch_xx_0, '0', epy_block_1, '0']
@@ -783,6 +782,7 @@ connections:
 - [epy_block_0, '0', blocks_mute_xx_0, '0']
 - [epy_block_0, MessageOutput, blocks_message_debug_0, print]
 - [epy_block_0, MessageOutput, blocks_mute_xx_0, set_mute]
+- [epy_block_1, '0', Custom_File_Sink_0, '0']
 - [uhd_usrp_source_0, '0', blocks_multiply_const_vxx_0, '0']
 - [uhd_usrp_source_0, '0', epy_block_0, '0']
 
