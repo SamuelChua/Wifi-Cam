@@ -72,7 +72,7 @@ Read_filename
 Vert_Hori
 - Arduino code to accept the list of angles from Arduino.py, and move the servos to control the vertical and horizontal movement of the antenna
 
-Sweep 
+Sweep/Servo Motor
 - Arduino test code to ensure that the servo is working 
 
 Reimage package
