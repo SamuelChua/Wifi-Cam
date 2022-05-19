@@ -55,7 +55,7 @@ Webcam
 - Controlling the USB Webcam
 
 Arduino
-- Will send Arduino list of angles 
+- Will send Arduino list of angles via serial communication from Python to Arduino
 
 Master
 - Master Program to control the GNURadio, Arduino and Webcam 
@@ -70,7 +70,7 @@ Read_filename
 - Data processing of bin file generated from GNURadio to give final heatmap of relative power from Wifi signals + overlaying picture of surrounding
 
 Vert_Hori
-- Arduino code to accept the list of angles from Arduino.py, and move the servos to control the vertical and horizontal movement of the antenna
+- Arduino code to accept the list of angles from Arduino.py, and move the servos to control the vertical and horizontal movement of the antenna via serial communication between Python and Arduino
 
 Sweep/Servo Motor
 - Arduino test code to ensure that the servo is working 
@@ -80,6 +80,8 @@ Reimage package
 
 3D Prints
 - STL and SCAD files for 3D printing
+- Infill Density 30-50% depending on application (how dense is the print)
+- Made use of MakerBot.Print/GrabCAD Print (Using UPrint SE Plus/Industry Printer in DSO Playground of which those with PRINT extension used GrabCAD Print)
 
 ## Running the program
 After installing GNURadio, ensure the connnections are made between the servo and Arduino and USRP is plugged into your device. Run master.py in GNURadio command line with the extract.py in the same directory and let the fun begin! 
@@ -104,6 +106,12 @@ Created a custom embedded python block to record for n seconds then mute the USR
 ### Arduino (Vert_Hori)
 
 The code is designed to split the string of angles arduino.py sends into its horizontal & vertical components and having map the speed to control the movement of the servo 
+
+### read_filename
+
+Below is the illustration of how the mean power values are calculated 
+![Screenshot 2022-05-19 113415 png-mh](https://user-images.githubusercontent.com/9492646/169213792-75017b86-2e38-4fe8-897f-c362347d715e.png)
+
 
 ## Video Demonstration
 
