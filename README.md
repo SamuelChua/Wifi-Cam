@@ -107,6 +107,12 @@ Created a custom embedded python block to record for n seconds then mute the USR
 
 The code is designed to split the string of angles arduino.py sends into its horizontal & vertical components and having map the speed to control the movement of the servo 
 
+### read_filename
+
+Below is the illustration of how the mean power values are calculated 
+![Screenshot 2022-05-19 113415 png-mh](https://user-images.githubusercontent.com/9492646/169213792-75017b86-2e38-4fe8-897f-c362347d715e.png)
+
+
 ## Video Demonstration
 
 *Insert Video of Demonstration/Link to Youtube*
