@@ -6,7 +6,7 @@
 #
 # GNU Radio Python Flow Graph
 # Title: Extract
-# GNU Radio version: v3.8.2.0-57-gd71cd177
+# GNU Radio version: v3.8.2.0-57-gd71cd177  
 
 # GNU Radio Generated Script with edits from line 246   
 
