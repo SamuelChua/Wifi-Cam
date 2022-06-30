@@ -6,7 +6,8 @@ In this project, I used a software defined radio (SDR) along with a directional 
 image in order to give directional information of signal sources (possibly through
 walls!). Overall, I controlled and manipulated both the radio and camera with DSP and arduino control of a servo motor for the antenna. With this application, I'm able to display the spatial awareness of Wifi signals. 
 
-*Insert Picture of Full Set-Up*
+![WhatsApp Image 2022-06-30 at 9 37 27 AM (1)](https://user-images.githubusercontent.com/9492646/176574401-93061b6d-65b6-4043-aba7-005dd80cb512.jpeg)
+
 
 ## Table of Contents 
 - Hardware/Software Tools used
