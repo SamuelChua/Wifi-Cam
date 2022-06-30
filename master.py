@@ -11,11 +11,10 @@ def interval():
     interval.vert_interval = range(0,181,36)
     return interval.vert_interval, interval.hori_interval
 
-def webcam():
+def webcam(e):
     cam = cv2.VideoCapture(0)
-
     cv2.namedWindow("test")
-    start_time = time.time()
+    # start_time = time.time()
     img_counter = 0
     img2_counter = 0
     path = 'C:\\Users\\intern\\Documents\\GitHub\\Wifi-Cam\\image_data\\'
@@ -38,35 +37,20 @@ def webcam():
             cv2.imwrite(img_name, frame)
             print("{} written!".format(img_name))
             img_counter += 1
-        elif time.time() - start_time >= 5: 
-        #Check if 5 sec passed
+        elif e.Switch == 1: 
+        #Check if switch is on 
             img2_name = "image_{}.png".format(img2_counter)
             cv2.imwrite(os.path.join(path, img2_name), frame)
             print("{} written!".format(img2_counter))
-            start_time = time.time()
+            #start_time = time.time()
             img2_counter += 1
+            time.sleep(7)
 
     cam.release()
 
     cv2.destroyAllWindows()
 
 def arduino(e):
-    cam = cv2.VideoCapture(0)
-    cv2.namedWindow("cam")
-    start_time = time.time()
-    img_counter = 0
-    img2_counter = 0
-    path = 'C:\\Users\\intern\\Documents\\GitHub\\Wifi-Cam\\image_data\\'
-
-    while True:
-        ret, frame = cam.read()
-        if not ret:
-            print("failed to grab frame")
-            break
-        cv2.imshow("cam", frame)
-
-        k = cv2.waitKey(1)
-
     arduino=serial.Serial('COM3', 9600, timeout = .1)
     time.sleep(2)
     command = []
@@ -86,23 +70,18 @@ def arduino(e):
             j = i + j
             command.append(j)
 
-
-
     for i in command:
         i = str(i)
         print (i)     
         
         #Arduino moves
         arduino.write(i.encode())
-        time.sleep(5)
+        time.sleep(7)
 
         #GNUradio on and webcam take pic
         e.set_Switch(1)
         print("gr is on!, %d" % e.Switch)
-        # img2_name = "image_{}.png".format(img2_counter)
-        # cv2.imwrite(os.path.join(path, img2_name), frame)
-        # print("{} written!".format(img2_counter))
-        # img2_counter += 1
+        #Image capture in webcam function 
         time.sleep(5)
 
         #GNUradio off and turn to next angle
@@ -112,11 +91,6 @@ def arduino(e):
 
             #if data:
                 #print (data)
-
-             
-    cam.release()
-
-    cv2.destroyAllWindows()
     
 def changeSwitch(e):
     # Adjust switch here
@@ -148,16 +122,17 @@ if __name__ == '__main__':
     #Declare Processes and Threads
     e = extract()
     #ard = multiprocessing.Process(target=arduino, args=(e,))
-    web = multiprocessing.Process(target=webcam, args=()) #May need to remove
+    #web = multiprocessing.Process(target=webcam, args=()) #May need to remove
     
     # Start thread to loop switch
     #thread_switch = Thread(target=changeSwitch, args=(e,))
 
     #Changed Arduino from process to Thread
     thread_ard = Thread(target=arduino, args=(e,)) 
+    thread_web = Thread(target=webcam, args=(e,))
     
     #ard.start()
-    web.start()
+    thread_web.start()
     #thread_switch.start()
     thread_ard.start()
 
@@ -166,10 +141,11 @@ if __name__ == '__main__':
     # End threads
     #thread_switch.join()
     thread_ard.join()
+    thread_web.join()
 
     # End processes
     #ard.join()
-    web.join()
+    #web.join()
 
     # TODO: attempt to delete extract object
     
