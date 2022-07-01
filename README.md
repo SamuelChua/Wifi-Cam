@@ -116,7 +116,7 @@ Below is the illustration of how the mean power values are calculated
 
 ## Video Demonstration
 
-*Insert Video of Demonstration/Link to Youtube*
+Refer to https://youtu.be/VoVrBwUprhU
 
 ## Ideas I experimented with along the way: 
 
